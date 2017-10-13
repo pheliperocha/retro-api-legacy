@@ -32,7 +32,7 @@ router.post('/card', retroController.createNewCard);
 router.delete('/card/:id', retroController.deleteCard);
 
 router.delete('/list/:id', retroController.deleteList);
-router.post('/retrospective');
+router.patch('/retrospective/:id', retroController.updateRetrospective);
 
 router.get('/', function(req, res) {
     return res.status(200).send({
