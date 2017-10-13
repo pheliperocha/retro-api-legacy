@@ -1,10 +1,5 @@
 var User = require('../models/user');
 
-exports.test = function (req, res) {
-    console.log(1);
-    User.test();
-};
-
 exports.loginLinkedin = function (req, res) {
     var accessTokenUrl = 'https://www.linkedin.com/uas/oauth2/accessToken';
     var peopleApiUrl = 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address,picture-url)';
@@ -44,23 +39,7 @@ exports.loginLinkedin = function (req, res) {
 };
 
 exports.getAllRetrospectives = function(req, res) {
-
-    var retrospectives = [{
-        id: 1,
-        title: "Retrospectiva número 1",
-        date: '02/09/2017',
-        image: ''
-    }, {
-        id: 2,
-        title: "Retrospectiva número 2",
-        date: '16/09/2017',
-        image: ''
-    }, {
-        id: 3,
-        title: "Retrospectiva número 3",
-        date: '30/09/2017',
-        image: ''
-    }];
-
-    return res.status(200).send(retrospectives);
+    User.myRetrospectives(req.params.userId, result => {
+        return res.status(200).send(result);
+    });
 };
