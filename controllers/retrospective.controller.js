@@ -145,6 +145,19 @@ exports.createNewRetrospective = function(req, res) {
     return res.status(200).send(newRetrospective);
 };
 
+exports.createNewList = function(req, res) {
+    var info = req.body;
+
+    var newList = {
+        id: 4,
+        title: '',
+        order: 4,
+        cards: []
+    };
+
+    return res.status(200).send(newList);
+};
+
 exports.deleteCard = function (req, res) {
     return res.status(200).send(true);
 };

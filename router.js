@@ -28,6 +28,7 @@ router.get('/template', templateController.getAllTemplates);
 router.post('/auth/linkedin', userController.loginLinkedin);
 
 router.post('/retrospective', retroController.createNewRetrospective);
+router.post('/list', retroController.createNewList);
 router.post('/card', retroController.createNewCard);
 router.delete('/card/:id', retroController.deleteCard);
 
