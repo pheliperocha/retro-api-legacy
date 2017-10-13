@@ -30,7 +30,7 @@ exports.loginLinkedin = function (req, res) {
                     id: 1656,
                     name: 'Phelipe Rocha',
                     email: 'phelipeafonso@gmail.com',
-                    picture: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg',
+                    image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg',
                     status: 1
                 }
             });
