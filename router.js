@@ -29,6 +29,7 @@ router.post('/auth/linkedin', userController.loginLinkedin);
 router.post('/retrospective', retroController.createNewRetrospective);
 router.post('/list', retroController.createNewList);
 router.post('/card', retroController.createNewCard);
+router.post('/annotation', retroController.createNewAnnotation);
 
 router.patch('/retrospective/:id', retroController.updateRetrospective);
 router.patch('/list/:id', retroController.updateList);

@@ -4,16 +4,16 @@ exports.getRetrospective = function(req, res) {
 
     var retrospective = {
         id: req.params.id,
-        title: "Retrospectiva número 3",
-        context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel condimentum justo. Nam facilisis arcu tincidunt erat hendrerit, vitae auctor nisl mollis. Pellentesque pellentesque, sapien eget mollis sagittis, nunc velit semper elit, at sollicitudin quam nisi vestibulum tellus. ",
-        state: 3,
+        title: "Retrospectiva Teste",
+        context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel condimentum justo. Nam facilisis arcu tincidunt erat hendrerit, vitae auctor nisl mollis. Pellentesque pellentesque, sapien eget mollis sagittis, nunc velit semper elit, at sollicitudin quam nisi vestibulum tellus.",
+        state: 1,
         date: '30/09/2017',
         image: '',
         pin: null,
         facilitador: {
             id: 1,
             name: 'Phelipe Rocha',
-            image: ''
+            image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
         },
         members: [
             {
@@ -54,13 +54,21 @@ exports.getAllLists = function(req, res) {
                 listId: 1,
                 description: "Feedback 1 da lista 1 com 3 votos",
                 votes: 3,
-                userId: 1
+                user: {
+                    id: 1,
+                    name: 'Phelipe Rocha',
+                    image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
+                }
             }, {
                 id: 5,
                 listId: 1,
                 description: "Último feedback da primeira lista com 2 votos",
                 votes: 2,
-                userId: 2
+                user: {
+                    id: 2,
+                    name: 'User 2',
+                    image: ''
+                }
             }
         ]
     },{
@@ -73,13 +81,21 @@ exports.getAllLists = function(req, res) {
                 listId: 2,
                 description: "Feedback 4 da lista 2 com 1 voto",
                 votes: 1,
-                userId: 2
+                user: {
+                    id: 2,
+                    name: 'User 2',
+                    image: ''
+                }
             }, {
                 id: 2,
                 listId: 2,
                 description: "Feedback 2 da lista 2 com 3 votos",
                 votes: 3,
-                userId: 1
+                user: {
+                    id: 1,
+                    name: 'Phelipe Rocha',
+                    image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
+                }
             }
         ]
     },{
@@ -92,7 +108,11 @@ exports.getAllLists = function(req, res) {
                 listId: 3,
                 description: "Feedback 3 da lista 3 com 0 votos",
                 votes: 0,
-                userId: 1
+                user: {
+                    id: 1,
+                    name: 'Phelipe Rocha',
+                    image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
+                }
             }
         ]
     }];
@@ -106,7 +126,11 @@ exports.getAllCards = function(req, res) {
         id: 1,
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
         votes: 4,
-        userId: 1,
+        user: {
+            id: 1,
+            name: 'Phelipe Rocha',
+            image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
+        },
         list: {
             id: 1,
             title: 'Lista 1'
@@ -119,7 +143,11 @@ exports.getAllCards = function(req, res) {
         id: 5,
         description: "Cras eleifend eu enim ut ultrices",
         votes: 4,
-        userId: 2,
+        user: {
+            id: 2,
+            name: 'User 2',
+            image: ''
+        },
         list: {
             id: 2,
             title: 'Lista 2'
@@ -135,7 +163,11 @@ exports.getAllCards = function(req, res) {
         id: 4,
         description: "Nulla eu massa et nulla tincidunt aliquam",
         votes: 3,
-        userId: 2,
+        user: {
+            id: 2,
+            name: 'User 2',
+            image: ''
+        },
         list: {
             id: 2,
             title: 'Lista 2'
@@ -145,7 +177,11 @@ exports.getAllCards = function(req, res) {
         id: 2,
         description: "Donec pretium sagittis viverra. Vestibulum vestibulum luctus enim eu bibendum.",
         votes: 2,
-        userId: 1,
+        user: {
+            id: 1,
+            name: 'Phelipe Rocha',
+            image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
+        },
         list: {
             id: 3,
             title: 'Lista 3'
@@ -155,7 +191,11 @@ exports.getAllCards = function(req, res) {
         id: 3,
         description: "Fusce facilisis vel ipsum ut condimentum",
         votes: 0,
-        userId: 1,
+        user: {
+            id: 1,
+            name: 'Phelipe Rocha',
+            image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
+        },
         list: {
             id: 2,
             title: 'Lista 2'
@@ -189,7 +229,11 @@ exports.createNewCard = function(req, res) {
         listId: info.listId,
         description: info.description,
         votes: 0,
-        userId: info.userId
+        user: {
+            id: info.user.id,
+            name: 'Phelipe Rocha',
+            image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
+        }
     };
 
     return res.status(200).send(newCard);
@@ -222,6 +266,18 @@ exports.createNewList = function(req, res) {
     };
 
     return res.status(200).send(newList);
+};
+
+exports.createNewAnnotation = function(req, res) {
+    var info = req.body;
+
+    var newAnnotation = {
+        id: 19,
+        description: info.description,
+        cardId: info.cardId
+    };
+
+    return res.status(200).send(newAnnotation);
 };
 
 exports.deleteCard = function (req, res) {
