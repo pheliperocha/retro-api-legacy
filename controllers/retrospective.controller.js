@@ -173,3 +173,7 @@ exports.updateRetrospective = function(req, res) {
 exports.updateList = function(req, res) {
     return res.status(200).send(true);
 };
+
+exports.updateCard = function(req, res) {
+    return res.status(200).send(true);
+};

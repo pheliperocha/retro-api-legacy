@@ -19,22 +19,22 @@ var retroController = require('./controllers/retrospective.controller');
 var templateController = require('./controllers/template.controller');
 
 router.get('/facilitador/:userId/retrospective', userController.getAllRetrospectives);
-
 router.get('/retrospective/:id', retroController.getRetrospective);
 router.get('/retrospective/:id/list', retroController.getAllLists);
 router.get('/retrospective/:id/user', retroController.getAllUsers);
 router.get('/template', templateController.getAllTemplates);
 
 router.post('/auth/linkedin', userController.loginLinkedin);
-
 router.post('/retrospective', retroController.createNewRetrospective);
 router.post('/list', retroController.createNewList);
 router.post('/card', retroController.createNewCard);
-router.delete('/card/:id', retroController.deleteCard);
 
-router.delete('/list/:id', retroController.deleteList);
 router.patch('/retrospective/:id', retroController.updateRetrospective);
 router.patch('/list/:id', retroController.updateList);
+router.patch('/card/:id', retroController.updateCard);
+
+router.delete('/card/:id', retroController.deleteCard);
+router.delete('/list/:id', retroController.deleteList);
 
 router.get('/', function(req, res) {
     return res.status(200).send({
