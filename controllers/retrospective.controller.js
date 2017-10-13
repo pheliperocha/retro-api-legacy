@@ -156,3 +156,7 @@ exports.deleteList = function (req, res) {
 exports.updateRetrospective = function(req, res) {
     return res.status(200).send(true);
 };
+
+exports.updateList = function(req, res) {
+    return res.status(200).send(true);
+};
