@@ -88,7 +88,7 @@ exports.getAllUsers = function(req, res) {
     return res.status(200).send(users);
 };
 
-exports.createNewCard = function (req, res) {
+exports.createNewCard = function(req, res) {
 
     var info = req.body;
 
@@ -101,6 +101,22 @@ exports.createNewCard = function (req, res) {
     };
 
     return res.status(200).send(newCard);
+};
+
+exports.createNewRetrospective = function(req, res) {
+    var info = req.body;
+
+    var newRetrospective = {
+        id: 7,
+        title: info.title,
+        context: info.context,
+        state: 1,
+        date: Date(),
+        image: null,
+        pin: null
+    };
+
+    return res.status(200).send(newRetrospective);
 };
 
 exports.deleteCard = function (req, res) {
