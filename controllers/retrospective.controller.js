@@ -1,45 +1,19 @@
 Retrospective = require('../models/retrospective');
 
 exports.getRetrospective = function(req, res) {
+    Retrospective.get(req.params.id, retrospective => {
 
-    var retrospective = {
-        id: req.params.id,
-        title: "Retrospectiva Teste",
-        context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel condimentum justo. Nam facilisis arcu tincidunt erat hendrerit, vitae auctor nisl mollis. Pellentesque pellentesque, sapien eget mollis sagittis, nunc velit semper elit, at sollicitudin quam nisi vestibulum tellus.",
-        state: 1,
-        date: '30/09/2017',
-        image: '',
-        pin: null,
-        facilitador: {
-            id: 1,
-            name: 'Phelipe Rocha',
-            image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
-        },
-        members: [
-            {
-                id: 1,
-                name: 'Membro 1',
-                image: ''
-            },
-            {
-                id: 2,
-                name: 'Membro 2',
-                image: ''
-            },
-            {
-                id: 3,
-                name: 'Membro 3',
-                image: ''
-            },
-            {
-                id: 4,
-                name: 'Membro 4',
-                image: ''
-            }
-        ]
-    };
+        Retrospective.getFacilitador(req.params.id, facilitador => {
 
-    return res.status(200).send(retrospective);
+            Retrospective.getMembers(req.params.id, members => {
+                retrospective.facilitador = facilitador;
+                retrospective.members = members;
+                return res.status(200).send(retrospective);
+            });
+
+        });
+
+    });
 };
 
 exports.getAllLists = function(req, res) {
