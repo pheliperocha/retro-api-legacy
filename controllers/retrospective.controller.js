@@ -6,10 +6,10 @@ exports.getRetrospective = function(req, res) {
         id: req.params.id,
         title: "Retrospectiva número 3",
         context: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel condimentum justo. Nam facilisis arcu tincidunt erat hendrerit, vitae auctor nisl mollis. Pellentesque pellentesque, sapien eget mollis sagittis, nunc velit semper elit, at sollicitudin quam nisi vestibulum tellus. ",
-        state: 1,
+        state: 3,
         date: '30/09/2017',
         image: '',
-        pin: 54523,
+        pin: null,
         facilitador: {
             id: 1,
             name: 'Phelipe Rocha',
@@ -100,6 +100,72 @@ exports.getAllLists = function(req, res) {
     return res.status(200).send(lists);
 };
 
+exports.getAllCards = function(req, res) {
+
+    var cards = [{
+        id: 1,
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        votes: 4,
+        userId: 1,
+        list: {
+            id: 1,
+            title: 'Lista 1'
+        },
+        annotation: [{
+            id: 1,
+            description: "Donec pretium sagittis viverra. Vestibulum vestibulum luctus enim eu bibendum."
+        }]
+    }, {
+        id: 5,
+        description: "Cras eleifend eu enim ut ultrices",
+        votes: 4,
+        userId: 2,
+        list: {
+            id: 2,
+            title: 'Lista 2'
+        },
+        annotation: [{
+            id: 2,
+            description: "Vestibulum vestibulum luctus enim eu bibendum."
+        },{
+            id: 3,
+            description: "Nulla eu massa et nulla tincidunt aliquam. Vestibulum vestibulum luctus enim eu bibendum."
+        }]
+    },{
+        id: 4,
+        description: "Nulla eu massa et nulla tincidunt aliquam",
+        votes: 3,
+        userId: 2,
+        list: {
+            id: 2,
+            title: 'Lista 2'
+        },
+        annotation: []
+    }, {
+        id: 2,
+        description: "Donec pretium sagittis viverra. Vestibulum vestibulum luctus enim eu bibendum.",
+        votes: 2,
+        userId: 1,
+        list: {
+            id: 3,
+            title: 'Lista 3'
+        },
+        annotation: []
+    },{
+        id: 3,
+        description: "Fusce facilisis vel ipsum ut condimentum",
+        votes: 0,
+        userId: 1,
+        list: {
+            id: 2,
+            title: 'Lista 2'
+        },
+        annotation: []
+    }];
+
+    return res.status(200).send(cards);
+};
+
 exports.getAllUsers = function(req, res) {
     var users = [{
         id: 1,
@@ -167,13 +233,30 @@ exports.deleteList = function (req, res) {
 };
 
 exports.updateRetrospective = function(req, res) {
-    return res.status(200).send(true);
+    var response = {
+        updated: true,
+        data: {
+            pin: 74859
+        }
+    };
+
+    return res.status(200).send(response);
 };
 
 exports.updateList = function(req, res) {
-    return res.status(200).send(true);
+    var response = {
+        updated: true,
+        data: {}
+    };
+
+    return res.status(200).send(response);
 };
 
 exports.updateCard = function(req, res) {
-    return res.status(200).send(true);
+    var response = {
+        updated: true,
+        data: {}
+    };
+
+    return res.status(200).send(response);
 };

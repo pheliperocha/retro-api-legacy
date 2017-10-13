@@ -21,6 +21,7 @@ var templateController = require('./controllers/template.controller');
 router.get('/facilitador/:userId/retrospective', userController.getAllRetrospectives);
 router.get('/retrospective/:id', retroController.getRetrospective);
 router.get('/retrospective/:id/list', retroController.getAllLists);
+router.get('/retrospective/:id/card', retroController.getAllCards);
 router.get('/retrospective/:id/user', retroController.getAllUsers);
 router.get('/template', templateController.getAllTemplates);
 
