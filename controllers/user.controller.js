@@ -1,5 +1,10 @@
 var User = require('../models/user');
 
+exports.test = function (req, res) {
+    console.log(1);
+    User.test();
+};
+
 exports.loginLinkedin = function (req, res) {
     var accessTokenUrl = 'https://www.linkedin.com/uas/oauth2/accessToken';
     var peopleApiUrl = 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,email-address,picture-url)';
