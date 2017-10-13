@@ -242,17 +242,9 @@ exports.createNewCard = function(req, res) {
 exports.createNewRetrospective = function(req, res) {
     var info = req.body;
 
-    var newRetrospective = {
-        id: 7,
-        title: info.title,
-        context: info.context,
-        state: 1,
-        date: Date(),
-        image: null,
-        pin: null
-    };
-
-    return res.status(200).send(newRetrospective);
+    Retrospective.insert(info.title, info.context, info.templateId, info.facilitador.id, response => {
+        return res.status(200).send(response);
+    });
 };
 
 exports.createNewList = function(req, res) {
