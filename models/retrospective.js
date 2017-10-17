@@ -54,6 +54,6 @@ exports.insert = function(title, context, templateId, userId, cb) {
         if (err) {
             cb(err);
         }
-        cb({ id: results.insertId });
+        cb({ id: results.insertId.toString() });
     });
 };
