@@ -18,82 +18,15 @@ exports.getRetrospective = function(req, res) {
     });
 };
 
-exports.getAllLists = function(req, res) {
-
-    var lists = [{
-        id: 1,
-        title: "Lista 1",
-        order: 1,
-        cards: [
-            {
-                id: 1,
-                listId: 1,
-                description: "Feedback 1 da lista 1 com 3 votos",
-                votes: 3,
-                user: {
-                    id: 1,
-                    name: 'Phelipe Rocha',
-                    image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
-                }
-            }, {
-                id: 5,
-                listId: 1,
-                description: "Último feedback da primeira lista com 2 votos",
-                votes: 2,
-                user: {
-                    id: 2,
-                    name: 'User 2',
-                    image: ''
-                }
-            }
-        ]
-    },{
-        id: 2,
-        title: "Lista 2",
-        order: 2,
-        cards: [
-            {
-                id: 4,
-                listId: 2,
-                description: "Feedback 4 da lista 2 com 1 voto",
-                votes: 1,
-                user: {
-                    id: 2,
-                    name: 'User 2',
-                    image: ''
-                }
-            }, {
-                id: 2,
-                listId: 2,
-                description: "Feedback 2 da lista 2 com 3 votos",
-                votes: 3,
-                user: {
-                    id: 1,
-                    name: 'Phelipe Rocha',
-                    image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
-                }
-            }
-        ]
-    },{
-        id: 3,
-        title: "Lista 3",
-        order: 3,
-        cards: [
-            {
-                id: 3,
-                listId: 3,
-                description: "Feedback 3 da lista 3 com 0 votos",
-                votes: 0,
-                user: {
-                    id: 1,
-                    name: 'Phelipe Rocha',
-                    image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
-                }
-            }
-        ]
-    }];
-
-    return res.status(200).send(lists);
+exports.getAllListsFromRetrospective = function(req, res) {
+    List.getAll(req.params.id, lists => {
+        if (lists.forEach) {
+            lists.forEach(function (list) {
+                list.card = [];
+            });
+        }
+        return res.status(200).send(lists);
+    });
 };
 
 exports.getAllCards = function(req, res) {
