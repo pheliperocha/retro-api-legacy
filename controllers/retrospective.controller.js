@@ -1,4 +1,6 @@
 Retrospective = require('../models/retrospective');
+List = require('../models/list');
+Template = require('../models/template');
 
 exports.getRetrospective = function(req, res) {
     Retrospective.get(req.params.id, retrospective => {
@@ -216,8 +218,20 @@ exports.createNewCard = function(req, res) {
 exports.createNewRetrospective = function(req, res) {
     var info = req.body;
 
-    Retrospective.insert(info.title, info.context, info.templateId, info.facilitador.id, response => {
-        return res.status(200).send(response);
+    Retrospective.insert(info.title, info.context, info.templateId, info.facilitador.id, responseRetro => {
+        Template.get(info.templateId, responseTemplate => {
+            let obj = JSON.parse(responseTemplate.list);
+            let lists = [];
+
+            if (obj.forEach) {
+                obj.forEach(function (list) {
+                    lists.push([list.title, responseRetro.id]);
+                });
+                List.insert(lists, responseList => {});
+            }
+        });
+
+        return res.status(200).send(responseRetro);
     });
 };
 
