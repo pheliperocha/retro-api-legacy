@@ -1,13 +1,14 @@
 var db = require('../db');
 
-exports.getAll = function (id, cb) {
+exports.getAll = function (retroId, cb) {
     let query = "SELECT cd_raia as id, nome as title FROM raia WHERE cd_reuniao = ?";
 
-    db.query(query, id, function (err, results) {
+    db.query(query, retroId, function (err, results) {
         if (err) {
-            cb(err);
+            cb(err, null);
+            return;
         }
-        cb(results);
+        cb(null, results);
     });
 };
 

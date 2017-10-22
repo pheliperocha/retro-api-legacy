@@ -12,7 +12,7 @@ exports.myRetrospectives = function (userId, cb) {
 };
 
 exports.get = function (userId, cb) {
-    let query = "SELECT cd_usuario, nome, email, image FROM usuario WHERE cd_usuario = ? AND cd_status = 1";
+    let query = "SELECT cd_usuario as id, nome as name, email, image FROM usuario WHERE cd_usuario = ? AND cd_status = 1";
 
     db.query(query, [userId], function (err, results) {
         if (err) {

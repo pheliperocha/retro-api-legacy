@@ -21,13 +21,36 @@ exports.getRetrospective = function(req, res) {
 };
 
 exports.getAllListsFromRetrospective = function(req, res) {
-    List.getAll(req.params.id, lists => {
-        if (lists.forEach) {
-            lists.forEach(function (list) {
-                list.cards = [];
-            });
+    List.getAll(req.params.id, function(err, lists) {
+        if(err) {
+            return res.status(500).json('Error');
         }
-        return res.status(200).send(lists);
+
+        if(lists) {
+            var total = lists.length;
+            var count = 0;
+
+            for(var i = 0; i < lists.length; i++) {
+                (function(){
+                    var listEntry = lists[i];
+                    var listObject = {};
+                    listObject.entry = listEntry;
+
+                    Card.getAllFromList(lists[i].id, cards => {
+                        listObject.entry.cards = cards;
+                        count++;
+
+                        if (count > total - 1) {
+                            return res.status(200).json(lists);
+                        }
+                    });
+                }(i));
+            }
+
+            if (total <= 0) {
+                return res.status(200).json(lists);
+            }
+        }
     });
 };
 
