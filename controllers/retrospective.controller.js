@@ -168,7 +168,7 @@ exports.createNewCard = function(req, res) {
                 votes: 0,
                 user: {
                     id: info.userId,
-                    name: userResponse.nome,
+                    name: userResponse.name,
                     image: userResponse.image
                 }
             };
