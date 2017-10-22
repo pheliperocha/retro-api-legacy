@@ -57,3 +57,23 @@ exports.insert = function(title, context, templateId, userId, cb) {
         cb({ id: results.insertId.toString() });
     });
 };
+
+exports.update = function(data, retrospectiveId, cb) {
+    let query = "UPDATE reuniao SET ? WHERE cd_reuniao = ?";
+    let response = {
+        updated: false,
+        data: {}
+    };
+
+    db.query(query, [data, retrospectiveId], function (err, results) {
+        if (err) {
+            cb(err);
+        }
+
+        if (results.affectedRows > 0) {
+            response.updated = true;
+        }
+
+        cb(response);
+    });
+};

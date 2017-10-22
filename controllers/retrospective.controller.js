@@ -202,14 +202,11 @@ exports.deleteList = function (req, res) {
 };
 
 exports.updateRetrospective = function(req, res) {
-    var response = {
-        updated: true,
-        data: {
-            pin: 74859
-        }
-    };
+    let data = req.body;
 
-    return res.status(200).send(response);
+    Retrospective.update(data, req.params.id, response => {
+        return res.status(200).send(response);
+    });
 };
 
 exports.updateList = function(req, res) {
