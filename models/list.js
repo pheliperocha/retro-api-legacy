@@ -21,3 +21,23 @@ exports.insert = function(lists, cb) {
         cb({ id: results.insertId.toString() });
     });
 };
+
+exports.update = function(data, listId, cb) {
+    let query = "UPDATE raia SET ? WHERE cd_raia = ?";
+    let response = {
+        updated: false,
+        data: {}
+    };
+
+    db.query(query, [data, listId], function (err, results) {
+        if (err) {
+            cb(err);
+        }
+
+        if (results.affectedRows > 0) {
+            response.updated = true;
+        }
+
+        cb(response);
+    });
+};

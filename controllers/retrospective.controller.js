@@ -210,12 +210,11 @@ exports.updateRetrospective = function(req, res) {
 };
 
 exports.updateList = function(req, res) {
-    var response = {
-        updated: true,
-        data: {}
-    };
+    let data = req.body;
 
-    return res.status(200).send(response);
+    List.update(data, req.params.id, response => {
+        return res.status(200).send(response);
+    });
 };
 
 exports.updateCard = function(req, res) {
