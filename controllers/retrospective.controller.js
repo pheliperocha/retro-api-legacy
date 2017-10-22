@@ -1,6 +1,8 @@
 Retrospective = require('../models/retrospective');
 List = require('../models/list');
 Template = require('../models/template');
+Card = require('../models/card');
+User = require('../models/user');
 
 exports.getRetrospective = function(req, res) {
     Retrospective.get(req.params.id, retrospective => {
@@ -22,7 +24,7 @@ exports.getAllListsFromRetrospective = function(req, res) {
     List.getAll(req.params.id, lists => {
         if (lists.forEach) {
             lists.forEach(function (list) {
-                list.card = [];
+                list.cards = [];
             });
         }
         return res.status(200).send(lists);
@@ -133,19 +135,25 @@ exports.createNewCard = function(req, res) {
 
     var info = req.body;
 
-    var newCard = {
-        id: 9,
-        listId: info.listId,
-        description: info.description,
-        votes: 0,
-        user: {
-            id: info.user.id,
-            name: 'Phelipe Rocha',
-            image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
-        }
-    };
+    Card.insert(info.listId, info.userId, info.description, cardResponse => {
+        User.get(info.userId, userResponse => {
 
-    return res.status(200).send(newCard);
+            var newCard = {
+                id: cardResponse.id,
+                listId: info.listId,
+                description: info.description,
+                votes: 0,
+                user: {
+                    id: info.userId,
+                    name: userResponse.nome,
+                    image: userResponse.image
+                }
+            };
+
+            return res.status(200).send(newCard);
+
+        });
+    });
 };
 
 exports.createNewRetrospective = function(req, res) {

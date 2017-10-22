@@ -10,3 +10,14 @@ exports.myRetrospectives = function (userId, cb) {
         cb(results);
     });
 };
+
+exports.get = function (userId, cb) {
+    let query = "SELECT cd_usuario, nome, email, image FROM usuario WHERE cd_usuario = ? AND cd_status = 1";
+
+    db.query(query, [userId], function (err, results) {
+        if (err) {
+            cb(err);
+        }
+        cb(results[0]);
+    });
+};
