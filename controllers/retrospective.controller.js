@@ -177,16 +177,11 @@ exports.createNewRetrospective = function(req, res) {
 };
 
 exports.createNewList = function(req, res) {
-    var info = req.body;
+    let lists = [[req.body.title, req.body.retroId]];
 
-    var newList = {
-        id: 4,
-        title: '',
-        order: 4,
-        cards: []
-    };
-
-    return res.status(200).send(newList);
+    List.insert(lists, responseList => {
+        return res.status(200).send(responseList);
+    });
 };
 
 exports.createNewAnnotation = function(req, res) {
