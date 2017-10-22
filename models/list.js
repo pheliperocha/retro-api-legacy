@@ -18,7 +18,7 @@ exports.insert = function(lists, cb) {
         if (err) {
             cb(err);
         }
-        cb({ id: results.insertId.toString() });
+        cb({ id: results.insertId });
     });
 };
 
