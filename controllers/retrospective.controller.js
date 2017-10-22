@@ -201,7 +201,9 @@ exports.deleteCard = function (req, res) {
 };
 
 exports.deleteList = function (req, res) {
-    return res.status(200).send(true);
+    List.delete(req.params.id, response => {
+        return res.status(200).send(response);
+    });
 };
 
 exports.updateRetrospective = function(req, res) {

@@ -41,3 +41,19 @@ exports.update = function(data, listId, cb) {
         cb(response);
     });
 };
+
+exports.delete = function(listId, cb) {
+    let query = "DELETE FROM raia WHERE cd_raia = ?";
+
+    db.query(query, [listId], function (err, results) {
+        if (err) {
+            cb(err);
+        }
+
+        if (results.affectedRows > 0) {
+            cb(true);
+        } else {
+            cb(false);
+        }
+    });
+};
