@@ -2,7 +2,12 @@ var db = require('../db');
 var User = require('../models/user');
 
 exports.getAllFromList = function (listId, cb) {
-    let query = "SELECT cd_comentarios as cd, comentario as description, cd_usuario as userId FROM comentarios WHERE cd_raia = ? and cd_status = 1";
+    let query = "SELECT comentarios.cd_comentarios as cd, comentarios.comentario as description, comentarios.cd_usuario as userId, " +
+        "  count(comentario_voto.cd_comentario_voto) as votes " +
+        "FROM comentarios " +
+        "  LEFT JOIN comentario_voto ON comentarios.cd_comentarios = comentario_voto.cd_comentario " +
+        "WHERE comentarios.cd_raia = ? and comentarios.cd_status = 1 " +
+        "GROUP BY 1, 2, 3 ";
 
     db.query(query, listId, function (err, cards) {
         if(err) {
