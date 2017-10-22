@@ -21,3 +21,34 @@ exports.get = function (userId, cb) {
         cb(results[0]);
     });
 };
+
+exports.getByEmail = function (email, cb) {
+    let query = "SELECT cd_usuario as id, nome as name, email, image FROM usuario WHERE email = ? AND cd_status = 1";
+
+    db.query(query, [email], function (err, results) {
+        if (err) {
+            cb(err);
+        }
+        cb(results[0]);
+    });
+};
+
+exports.insert = function(name, email, image, linkedinId, cb) {
+    let user = {
+        nome: name,
+        email: email,
+        image: image,
+        cd_linkedin: linkedinId
+    };
+
+    let query = "INSERT INTO usuario SET ?";
+
+    db.query(query, user, function (err, results) {
+        if (err) {
+            cb(err);
+        }
+
+        user.id = results.insertId.toString();
+        cb(user);
+    });
+};

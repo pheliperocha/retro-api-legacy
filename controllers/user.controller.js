@@ -1,4 +1,17 @@
 var User = require('../models/user');
+var config = require('../config');
+var request = require('request');
+var moment = require('moment');
+var jwt = require('jwt-simple');
+
+function createJWT(user) {
+    var payload = {
+        sub: user._id,
+        iat: moment().unix(),
+        exp: moment().add(14, 'days').unix()
+    };
+    return jwt.encode(payload, config.TOKEN_SECRET);
+}
 
 exports.loginLinkedin = function (req, res) {
     var accessTokenUrl = 'https://www.linkedin.com/uas/oauth2/accessToken';
@@ -23,15 +36,17 @@ exports.loginLinkedin = function (req, res) {
         };
 
         request.get({ url: peopleApiUrl, qs: params, json: true }, function(err, response, profile) {
-            var token = createJWT(profile);
-            res.send({
-                token: token,
-                user: {
-                    id: 1656,
-                    name: 'Phelipe Rocha',
-                    email: 'phelipeafonso@gmail.com',
-                    image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg',
-                    status: 1
+
+            User.getByEmail(profile.emailAddress, existingUser => {
+
+                if (existingUser) {
+                    var token = createJWT(existingUser);
+                    res.send({ token: token, user: existingUser });
+                } else {
+                    User.insert(profile.firstName + ' ' + profile.lastName, profile.emailAddress, profile.pictureUrl, profile.id, newUser => {
+                        var token = createJWT(newUser);
+                        res.send({ token: token, user: newUser });
+                    });
                 }
             });
         });
