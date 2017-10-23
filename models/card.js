@@ -2,7 +2,7 @@ var db = require('../db');
 var User = require('../models/user');
 
 exports.getAllFromList = function (listId, cb) {
-    let query = "SELECT comentarios.cd_comentarios as cd, comentarios.comentario as description, comentarios.cd_usuario as userId, " +
+    let query = "SELECT comentarios.cd_comentarios as id, comentarios.comentario as description, comentarios.cd_usuario as userId, " +
         "  count(comentario_voto.cd_comentario_voto) as votes " +
         "FROM comentarios " +
         "  LEFT JOIN comentario_voto ON comentarios.cd_comentarios = comentario_voto.cd_comentario " +
@@ -57,5 +57,25 @@ exports.insert = function(listId, userId, description, cb) {
             cb(err);
         }
         cb({ id: results.insertId.toString() });
+    });
+};
+
+exports.update = function(data, cardId, cb) {
+    let query = "UPDATE comentarios SET ? WHERE cd_comentarios = ?";
+    let response = {
+        updated: false,
+        data: {}
+    };
+
+    db.query(query, [data, cardId], function (err, results) {
+        if (err) {
+            cb(err);
+        }
+
+        if (results.affectedRows > 0) {
+            response.updated = true;
+        }
+
+        cb(response);
     });
 };

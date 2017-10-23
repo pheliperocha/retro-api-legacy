@@ -246,10 +246,9 @@ exports.updateList = function(req, res) {
 };
 
 exports.updateCard = function(req, res) {
-    var response = {
-        updated: true,
-        data: {}
-    };
+    let data = req.body;
 
-    return res.status(200).send(response);
+    Card.update(data, req.params.id, response => {
+        return res.status(200).send(response);
+    });
 };
