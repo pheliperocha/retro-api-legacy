@@ -220,7 +220,9 @@ exports.createNewAnnotation = function(req, res) {
 };
 
 exports.deleteCard = function (req, res) {
-    return res.status(200).send(true);
+    Card.delete(req.params.id, response => {
+        return res.status(200).send(response);
+    });
 };
 
 exports.deleteList = function (req, res) {

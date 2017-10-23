@@ -24,6 +24,7 @@ exports.getAllFromList = function (listId, cb) {
                     var cardEntry = cards[i];
                     var cardObject = {};
                     cardObject.entry = cardEntry;
+                    cardObject.entry.listId = listId;
 
                     User.get(cards[i].userId, user => {
                         cardObject.entry.user = user;
@@ -77,5 +78,21 @@ exports.update = function(data, cardId, cb) {
         }
 
         cb(response);
+    });
+};
+
+exports.delete = function(cardId, cb) {
+    let query = "DELETE FROM comentarios WHERE cd_comentarios = ?";
+
+    db.query(query, [cardId], function (err, results) {
+        if (err) {
+            cb(err);
+        }
+
+        if (results.affectedRows > 0) {
+            cb(true);
+        } else {
+            cb(false);
+        }
     });
 };
