@@ -158,7 +158,7 @@ exports.createNewCard = function(req, res) {
 
     var info = req.body;
 
-    Card.insert(info.listId, info.userId, info.description, cardResponse => {
+    Card.insert(info.listId, info.userId, info.description, info.retroId, cardResponse => {
         User.get(info.userId, userResponse => {
 
             var newCard = {

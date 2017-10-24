@@ -44,20 +44,21 @@ exports.getAllFromList = function (listId, cb) {
     });
 };
 
-exports.insert = function(listId, userId, description, cb) {
+exports.insert = function(listId, userId, description, retroId, cb) {
     let comentario = {
         comentario: description,
         cd_raia: listId,
-        cd_usuario: userId
+        cd_usuario: userId,
+        cd_reuniao: retroId
     };
 
     let query = "INSERT INTO comentarios SET ?";
 
     db.query(query, comentario, function (err, results) {
         if (err) {
-            cb(err);
+            return cb(err);
         }
-        cb({ id: results.insertId.toString() });
+        return cb({ id: results.insertId.toString() });
     });
 };
 
