@@ -55,89 +55,9 @@ exports.getAllListsFromRetrospective = function(req, res) {
 };
 
 exports.getAllCards = function(req, res) {
-
-    var cards = [{
-        id: 1,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        votes: 4,
-        user: {
-            id: 1,
-            name: 'Phelipe Rocha',
-            image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
-        },
-        list: {
-            id: 1,
-            title: 'Lista 1'
-        },
-        annotation: [{
-            id: 1,
-            description: "Donec pretium sagittis viverra. Vestibulum vestibulum luctus enim eu bibendum."
-        }]
-    }, {
-        id: 5,
-        description: "Cras eleifend eu enim ut ultrices",
-        votes: 4,
-        user: {
-            id: 2,
-            name: 'User 2',
-            image: ''
-        },
-        list: {
-            id: 2,
-            title: 'Lista 2'
-        },
-        annotation: [{
-            id: 2,
-            description: "Vestibulum vestibulum luctus enim eu bibendum."
-        },{
-            id: 3,
-            description: "Nulla eu massa et nulla tincidunt aliquam. Vestibulum vestibulum luctus enim eu bibendum."
-        }]
-    },{
-        id: 4,
-        description: "Nulla eu massa et nulla tincidunt aliquam",
-        votes: 3,
-        user: {
-            id: 2,
-            name: 'User 2',
-            image: ''
-        },
-        list: {
-            id: 2,
-            title: 'Lista 2'
-        },
-        annotation: []
-    }, {
-        id: 2,
-        description: "Donec pretium sagittis viverra. Vestibulum vestibulum luctus enim eu bibendum.",
-        votes: 2,
-        user: {
-            id: 1,
-            name: 'Phelipe Rocha',
-            image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
-        },
-        list: {
-            id: 3,
-            title: 'Lista 3'
-        },
-        annotation: []
-    },{
-        id: 3,
-        description: "Fusce facilisis vel ipsum ut condimentum",
-        votes: 0,
-        user: {
-            id: 1,
-            name: 'Phelipe Rocha',
-            image: 'https://s3-sa-east-1.amazonaws.com/pheliperocha/images/brand/PhelipeRocha-150.jpg'
-        },
-        list: {
-            id: 2,
-            title: 'Lista 2'
-        },
-        annotation: []
-    }];
-
-    return res.status(200).send(cards);
+    Retrospective.getCards(req.params.id, cards => {
+        return res.status(200).send(cards);
+    });
 };
 
 exports.getAllUsers = function(req, res) {
