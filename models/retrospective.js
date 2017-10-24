@@ -67,7 +67,7 @@ exports.update = function(data, retrospectiveId, cb) {
 
     db.query(query, [data, retrospectiveId], function (err, results) {
         if (err) {
-            cb(err);
+            return cb(err);
         }
 
         if (results.affectedRows > 0) {
