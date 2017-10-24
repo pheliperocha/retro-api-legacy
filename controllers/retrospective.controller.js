@@ -3,6 +3,7 @@ List = require('../models/list');
 Template = require('../models/template');
 Card = require('../models/card');
 User = require('../models/user');
+Annotation = require('../models/annotation');
 
 exports.getRetrospective = function(req, res) {
     Retrospective.get(req.params.id, retrospective => {
@@ -130,13 +131,19 @@ exports.createNewList = function(req, res) {
 exports.createNewAnnotation = function(req, res) {
     var info = req.body;
 
-    var newAnnotation = {
-        id: 19,
-        description: info.description,
-        cardId: info.cardId
-    };
+    Annotation.insert(info.description, info.cardId, (annotation, err) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
 
-    return res.status(200).send(newAnnotation);
+        var newAnnotation = {
+            id: annotation.id,
+            description: info.description,
+            cardId: info.cardId
+        };
+
+        return res.status(200).send(newAnnotation);
+    });
 };
 
 exports.deleteCard = function (req, res) {
