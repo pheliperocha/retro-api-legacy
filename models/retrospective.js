@@ -27,17 +27,16 @@ exports.getFacilitador = function (id, cb) {
 };
 
 exports.getMembers = function (id, cb) {
-    let query = "SELECT usuario.cd_usuario as id, usuario.nome as name, usuario.image\n" +
-        "FROM reuniao\n" +
-        "  JOIN reuniao_membro ON reuniao_membro.cd_usuario = reuniao.cd_usuario AND reuniao_membro.cd_reuniao = reuniao.cd_reuniao\n" +
-        "  JOIN usuario ON reuniao_membro.cd_usuario = usuario.cd_usuario\n" +
-        "WHERE reuniao.cd_reuniao = ?";
+    let query = "SELECT usuario.cd_usuario as id, nome as name, image " +
+        "FROM reuniao_membro " +
+        "JOIN usuario ON usuario.cd_usuario = reuniao_membro.cd_usuario " +
+        "WHERE cd_reuniao = ?";
 
     db.query(query, id, function (err, results) {
         if (err) {
-            cb(err);
+            return cb(err);
         }
-        cb(results);
+        return cb(results);
     });
 };
 
