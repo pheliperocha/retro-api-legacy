@@ -12,6 +12,17 @@ exports.get = function (id, cb) {
     });
 };
 
+exports.getByPin = function (pin, cb) {
+    let query = "SELECT cd_reuniao as id, nome as title, contexto as context, status_reuniao as state, dh_timestamp as date, pin, image FROM reuniao WHERE pin = ?";
+
+    db.query(query, pin, function (err, results) {
+        if (err) {
+            return cb(err);
+        }
+        return cb(results[0]);
+    });
+};
+
 exports.getFacilitador = function (id, cb) {
     let query = "SELECT usuario.cd_usuario as id, usuario.nome as name, usuario.image\n" +
         "FROM reuniao\n" +
