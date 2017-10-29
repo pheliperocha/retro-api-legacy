@@ -19,6 +19,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('./router'));
 
-app.listen(app.get('port'), app.get('host'), function() {
+var server = app.listen(app.get('port'), app.get('host'), function() {
     console.log('Express server listening on port ' + app.get('port'));
+});
+
+var io = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+
+
+
 });
