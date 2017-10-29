@@ -41,7 +41,7 @@ exports.getMembers = function (id, cb) {
     let query = "SELECT usuario.cd_usuario as id, nome as name, image " +
         "FROM reuniao_membro " +
         "JOIN usuario ON usuario.cd_usuario = reuniao_membro.cd_usuario " +
-        "WHERE cd_reuniao = ?";
+        "WHERE cd_reuniao = ? AND status = 1";
 
     db.query(query, id, function (err, results) {
         if (err) {
