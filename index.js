@@ -17,11 +17,10 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(require('./router'));
 
 var server = app.listen(app.get('port'), app.get('host'), function() {
     console.log('Express server listening on port ' + app.get('port'));
 });
 
 var io = require('socket.io')(server);
-require('./socket')(io);
+app.use(require('./router')(io));
