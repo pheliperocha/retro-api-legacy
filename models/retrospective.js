@@ -129,6 +129,38 @@ exports.insert = function(title, context, templateId, userId, cb) {
     });
 };
 
+exports.insertMember = function (retroId, userId, cb) {
+    let reuniao_membro = {
+        cd_reuniao: retroId,
+        cd_usuario: userId
+    };
+
+    let query = "INSERT INTO reuniao_membro SET ?";
+
+    db.query(query, reuniao_membro, function (err, results) {
+        if (err) {
+            return cb(err);
+        }
+        return cb({ id: results.insertId });
+    });
+};
+
+exports.deleteMember = function (retroId, userId, cb) {
+    let query = "DELETE FROM reuniao_membro WHERE cd_reuniao = ? AND cd_usuario = ?";
+
+    db.query(query, [retroId, userId], function (err, results) {
+        if (err) {
+            return cb(err);
+        }
+
+        if (results.affectedRows > 0) {
+            return cb(true);
+        } else {
+            return cb(false);
+        }
+    });
+};
+
 exports.update = function(data, retrospectiveId, cb) {
     let query = "UPDATE reuniao SET ? WHERE cd_reuniao = ?";
     let response = {

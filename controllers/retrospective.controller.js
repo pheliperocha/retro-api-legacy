@@ -164,6 +164,20 @@ exports.createNewAnnotation = function(req, res) {
     });
 };
 
+exports.addNewMember = function(req, res) {
+    var info = req.body;
+
+    Retrospective.insertMember(info.retroId, info.userId, response => {
+        return res.status(200).send(response);
+    });
+};
+
+exports.removeMember = function(req, res) {
+    Retrospective.deleteMember(req.params.retroId, req.params.userId, response => {
+        return res.status(200).send(response);
+    });
+};
+
 exports.deleteCard = function (req, res) {
     Card.delete(req.params.id, response => {
         return res.status(200).send(response);

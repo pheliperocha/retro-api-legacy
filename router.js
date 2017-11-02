@@ -20,6 +20,7 @@ var returnRouter = function(io) {
 
     router.post('/auth/linkedin', userController.loginLinkedin);
     router.post('/retrospective', retroController.createNewRetrospective);
+    router.post('/retrospective/member', retroController.addNewMember);
     router.post('/list', retroController.createNewList);
     router.post('/card', function (req, res) {
         retroController.createNewCard(req, res, io);
@@ -37,6 +38,7 @@ var returnRouter = function(io) {
 
     router.delete('/card/:id', retroController.deleteCard);
     router.delete('/list/:id', retroController.deleteList);
+    router.delete('/retrospective/:retroId/member/:userId', retroController.removeMember);
     router.delete('/card/:cardId/user/:userId', (req, res) => {
         retroController.cardDownvote(req, res, io);
     });
