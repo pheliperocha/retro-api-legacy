@@ -10,7 +10,6 @@ var retroController = require('./controllers/retrospective.controller');
 var templateController = require('./controllers/template.controller');
 
 var returnRouter = function(io) {
-
     router.get('/facilitador/:userId/retrospective', userController.getAllRetrospectives);
     router.get('/retrospective/:id', retroController.getRetrospective);
     router.get('/retrospective/pincode/:pin', retroController.getRetrospectiveByPin);
@@ -61,6 +60,10 @@ var returnRouter = function(io) {
 
         socket.on('left', data => {
             io.in(data.retroId).emit('left_member', data.user);
+        });
+
+        socket.on('delete_card', data => {
+            io.in(data.retroId).emit('card_deleted', data.card);
         });
     });
 
