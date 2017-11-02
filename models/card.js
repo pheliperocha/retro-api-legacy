@@ -1,6 +1,21 @@
 var db = require('../db');
 var User = require('../models/user');
 
+exports.get = function (cardId, cb) {
+    let query = "SELECT cd_comentarios as id, comentario as description, cd_raia as listId, reuniao.cd_reuniao as retroId " +
+                "FROM comentarios " +
+                "JOIN reuniao ON reuniao.cd_reuniao = comentarios.cd_reuniao " +
+                "WHERE cd_comentarios = ? ";
+
+    db.query(query, cardId, function (err, card) {
+        if(err) {
+            return cb(err);
+        }
+
+        return cb(card[0]);
+    });
+};
+
 exports.getAllFromList = function (listId, cb) {
     let query = "SELECT comentarios.cd_comentarios as id, comentarios.comentario as description, comentarios.cd_usuario as userId, " +
         "  count(comentario_voto.cd_comentario_voto) as votes " +
@@ -58,12 +73,12 @@ exports.insert = function(listId, userId, description, retroId, cb) {
         if (err) {
             return cb(err);
         }
-        return cb({ id: results.insertId.toString() });
+        return cb({ id: results.insertId });
     });
 };
 
 exports.update = function(data, cardId, cb) {
-    let query = "UPDATE comentarios SET ? WHERE cd_comentarios = ?";
+    let query = "UPDATE co'mentarios SET ? WHERE cd_comentarios = ?";
     let response = {
         updated: false,
         data: {}

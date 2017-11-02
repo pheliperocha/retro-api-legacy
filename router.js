@@ -28,7 +28,9 @@ var returnRouter = function(io) {
 
     router.patch('/retrospective/:id', retroController.updateRetrospective);
     router.patch('/list/:id', retroController.updateList);
-    router.patch('/card/:id', retroController.updateCard);
+    router.patch('/card/:id', function (req, res) {
+        retroController.updateCard(req, res, io);
+    });
 
     router.delete('/card/:id', retroController.deleteCard);
     router.delete('/list/:id', retroController.deleteList);

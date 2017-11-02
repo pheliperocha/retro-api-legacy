@@ -110,7 +110,7 @@ exports.createNewCard = function(req, res, io) {
                 }
             };
 
-            io.emit('new_card', newCard);
+            io.to(info.retroId).emit('new_card', newCard);
 
             return res.status(200).send(newCard);
 
@@ -192,10 +192,15 @@ exports.updateList = function(req, res) {
     });
 };
 
-exports.updateCard = function(req, res) {
+exports.updateCard = function(req, res, io) {
     let data = req.body;
 
     Card.update(data, req.params.id, response => {
-        return res.status(200).send(response);
+        Card.get(req.params.id, card => {
+
+            io.to(card.retroId).emit('updated_card', card);
+
+            return res.status(200).send(response);
+        });
     });
 };
