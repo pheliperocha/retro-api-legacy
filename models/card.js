@@ -115,7 +115,7 @@ exports.downvote = function(cardId, userId, cb) {
 };
 
 exports.update = function(data, cardId, cb) {
-    let query = "UPDATE co'mentarios SET ? WHERE cd_comentarios = ?";
+    let query = "UPDATE comentarios SET ? WHERE cd_comentarios = ?";
     let response = {
         updated: false,
         data: {}
@@ -123,14 +123,14 @@ exports.update = function(data, cardId, cb) {
 
     db.query(query, [data, cardId], function (err, results) {
         if (err) {
-            cb(err);
+            return cb(err);
         }
 
         if (results.affectedRows > 0) {
             response.updated = true;
         }
 
-        cb(response);
+        return cb(response);
     });
 };
 
