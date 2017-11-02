@@ -77,6 +77,43 @@ exports.insert = function(listId, userId, description, retroId, cb) {
     });
 };
 
+exports.upvote = function(cardId, userId, cb) {
+    let comentario_voto = {
+        cd_comentario: cardId,
+        cd_usuario: userId
+    };
+
+    let query = "INSERT INTO comentario_voto SET ?";
+
+    db.query(query, comentario_voto, function (err, results) {
+        if (err) {
+            return cb(false);
+        }
+
+        if (results.affectedRows > 0) {
+            cb(true);
+        } else {
+            cb(false);
+        }
+    });
+};
+
+exports.downvote = function(cardId, userId, cb) {
+    let query = "DELETE FROM comentario_voto WHERE cd_comentario = ? AND cd_usuario = ?";
+
+    db.query(query, [cardId, userId], function (err, results) {
+        if (err) {
+            return cb(err);
+        }
+
+        if (results.affectedRows > 0) {
+            cb(true);
+        } else {
+            cb(false);
+        }
+    });
+};
+
 exports.update = function(data, cardId, cb) {
     let query = "UPDATE co'mentarios SET ? WHERE cd_comentarios = ?";
     let response = {

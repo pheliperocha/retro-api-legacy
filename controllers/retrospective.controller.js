@@ -204,3 +204,17 @@ exports.updateCard = function(req, res, io) {
         });
     });
 };
+
+exports.cardUpvote = function (req, res) {
+    var info = req.body;
+
+    Card.upvote(req.params.id, info.userId, cardVoted => {
+        return res.status(200).send(cardVoted);
+    });
+};
+
+exports.cardDownvote = function (req, res) {
+    Card.downvote(req.params.cardId, req.params.userId, cardVoted => {
+        return res.status(200).send(cardVoted);
+    });
+};
