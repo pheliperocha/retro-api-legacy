@@ -25,7 +25,9 @@ var returnRouter = function(io) {
         retroController.createNewCard(req, res, io);
     });
     router.post('/annotation', retroController.createNewAnnotation);
-    router.post('/card/:id/vote', retroController.cardUpvote);
+    router.post('/card/:id/vote', (req, res) => {
+        retroController.cardUpvote(req, res, io);
+    });
 
     router.patch('/retrospective/:id', retroController.updateRetrospective);
     router.patch('/list/:id', retroController.updateList);
@@ -35,7 +37,9 @@ var returnRouter = function(io) {
 
     router.delete('/card/:id', retroController.deleteCard);
     router.delete('/list/:id', retroController.deleteList);
-    router.delete('/card/:cardId/user/:userId', retroController.cardDownvote);
+    router.delete('/card/:cardId/user/:userId', (req, res) => {
+        retroController.cardDownvote(req, res, io);
+    });
 
     router.get('/', function (req, res) {
         return res.status(200).send({

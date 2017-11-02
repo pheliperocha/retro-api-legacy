@@ -205,16 +205,26 @@ exports.updateCard = function(req, res, io) {
     });
 };
 
-exports.cardUpvote = function (req, res) {
+exports.cardUpvote = function (req, res, io) {
     var info = req.body;
 
     Card.upvote(req.params.id, info.userId, cardVoted => {
-        return res.status(200).send(cardVoted);
+        Card.get(req.params.id, card => {
+            if (cardVoted) {
+                io.to(card.retroId).emit('upvoted_card', card);
+            }
+            return res.status(200).send(cardVoted);
+        });
     });
 };
 
-exports.cardDownvote = function (req, res) {
+exports.cardDownvote = function (req, res, io) {
     Card.downvote(req.params.cardId, req.params.userId, cardVoted => {
-        return res.status(200).send(cardVoted);
+        Card.get(req.params.cardId, card => {
+            if (cardVoted) {
+                io.to(card.retroId).emit('downvoted_card', card);
+            }
+            return res.status(200).send(cardVoted);
+        });
     });
 };
