@@ -22,7 +22,9 @@ var returnRouter = function(io) {
     router.post('/auth/linkedin', userController.loginLinkedin);
     router.post('/retrospective', retroController.createNewRetrospective);
     router.post('/list', retroController.createNewList);
-    router.post('/card', retroController.createNewCard);
+    router.post('/card', function (req, res) {
+        retroController.createNewCard(req, res, io);
+    });
     router.post('/annotation', retroController.createNewAnnotation);
 
     router.patch('/retrospective/:id', retroController.updateRetrospective);

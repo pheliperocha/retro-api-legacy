@@ -91,7 +91,7 @@ exports.getAllUsers = function(req, res) {
     return res.status(200).send(users);
 };
 
-exports.createNewCard = function(req, res) {
+exports.createNewCard = function(req, res, io) {
 
     var info = req.body;
 
@@ -109,6 +109,8 @@ exports.createNewCard = function(req, res) {
                     image: userResponse.image
                 }
             };
+
+            io.emit('new_card', newCard);
 
             return res.status(200).send(newCard);
 
