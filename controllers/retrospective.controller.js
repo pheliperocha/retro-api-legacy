@@ -242,3 +242,14 @@ exports.cardDownvote = function (req, res, io) {
         });
     });
 };
+
+exports.getLinkedinToken = function (req, res, io) {
+    let code = req.query.code;
+    let state = req.query.state;
+
+    io.to(state).emit('linkedinToken', code);
+
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('<script>this.window.close()</script>');
+    res.end();
+};
