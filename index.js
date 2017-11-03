@@ -7,6 +7,7 @@ var cors = require('cors');
 var express = require('express');
 var logger = require('morgan');
 var request = require('request');
+require('dotenv').load();
 
 var config = require('./config');
 
