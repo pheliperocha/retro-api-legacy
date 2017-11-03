@@ -22,18 +22,17 @@ exports.getRetrospective = function(req, res) {
 };
 
 exports.getRetrospectiveByPin = function(req, res) {
-    Retrospective.getByPin(req.params.pin, retrospective => {
-
+    Retrospective.getByPin(req.params.pin, (err, retrospective) => {
+        if (err || retrospective == undefined) {
+            return res.status(404);
+        }
         Retrospective.getFacilitador(retrospective.id, facilitador => {
-
             Retrospective.getMembers(retrospective.id, members => {
                 retrospective.facilitador = facilitador;
                 retrospective.members = members;
                 return res.status(200).send(retrospective);
             });
-
         });
-
     });
 };
 

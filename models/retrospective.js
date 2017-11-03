@@ -17,9 +17,9 @@ exports.getByPin = function (pin, cb) {
 
     db.query(query, pin, function (err, results) {
         if (err) {
-            return cb(err);
+            return cb(err, null);
         }
-        return cb(results[0]);
+        return cb(null, results[0]);
     });
 };
 
