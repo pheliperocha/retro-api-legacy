@@ -52,7 +52,7 @@ exports.getAllListsFromRetrospective = function(req, res) {
                     var listObject = {};
                     listObject.entry = listEntry;
 
-                    Card.getAllFromList(lists[i].id, cards => {
+                    Card.getAllFromList(lists[i].id, req.user.id, cards => {
                         listObject.entry.cards = cards;
                         count++;
 
