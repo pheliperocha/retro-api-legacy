@@ -10,7 +10,7 @@ var retroController = require('./controllers/retrospective.controller');
 var templateController = require('./controllers/template.controller');
 
 var returnRouter = function(io) {
-    router.get('/facilitador/:userId/retrospective', userController.getAllRetrospectives);
+    router.get('/facilitador/:userId/retrospective', authGuard, userController.getAllRetrospectives);
     router.get('/retrospective/:id', retroController.getRetrospective);
     router.get('/retrospective/pincode/:pin', retroController.getRetrospectiveByPin);
     router.get('/retrospective/:id/list', retroController.getAllListsFromRetrospective);
