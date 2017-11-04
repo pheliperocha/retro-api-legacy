@@ -11,38 +11,38 @@ var templateController = require('./controllers/template.controller');
 
 var returnRouter = function(io) {
     router.get('/facilitador/:userId/retrospective', authGuard, userController.getAllRetrospectives);
-    router.get('/retrospective/:id', retroController.getRetrospective);
-    router.get('/retrospective/pincode/:pin', retroController.getRetrospectiveByPin);
-    router.get('/retrospective/:id/list', retroController.getAllListsFromRetrospective);
-    router.get('/retrospective/:id/card', retroController.getAllCards);
-    router.get('/retrospective/:id/user', retroController.getAllUsers);
+    router.get('/retrospective/:id', authGuard, retroController.getRetrospective);
+    router.get('/retrospective/pincode/:pin', authGuard, retroController.getRetrospectiveByPin);
+    router.get('/retrospective/:id/list', authGuard, retroController.getAllListsFromRetrospective);
+    router.get('/retrospective/:id/card', authGuard, retroController.getAllCards);
+    router.get('/retrospective/:id/user', authGuard, retroController.getAllUsers);
     router.get('/template', templateController.getAllTemplates);
     router.get('/getLinkedinToken/', (req, res) => {
         retroController.getLinkedinToken(req, res, io);
     });
 
     router.post('/auth/linkedin', userController.loginLinkedin);
-    router.post('/retrospective', retroController.createNewRetrospective);
-    router.post('/retrospective/member', retroController.addNewMember);
-    router.post('/list', retroController.createNewList);
-    router.post('/card', function (req, res) {
+    router.post('/retrospective', authGuard, retroController.createNewRetrospective);
+    router.post('/retrospective/member', authGuard, retroController.addNewMember);
+    router.post('/list', authGuard, retroController.createNewList);
+    router.post('/card', authGuard, function (req, res) {
         retroController.createNewCard(req, res, io);
     });
-    router.post('/annotation', retroController.createNewAnnotation);
-    router.post('/card/:id/vote', (req, res) => {
+    router.post('/annotation', authGuard, retroController.createNewAnnotation);
+    router.post('/card/:id/vote', authGuard, (req, res) => {
         retroController.cardUpvote(req, res, io);
     });
 
-    router.patch('/retrospective/:id', retroController.updateRetrospective);
-    router.patch('/list/:id', retroController.updateList);
-    router.patch('/card/:id', function (req, res) {
+    router.patch('/retrospective/:id', authGuard, retroController.updateRetrospective);
+    router.patch('/list/:id', authGuard, retroController.updateList);
+    router.patch('/card/:id', authGuard, function (req, res) {
         retroController.updateCard(req, res, io);
     });
 
-    router.delete('/card/:id', retroController.deleteCard);
-    router.delete('/list/:id', retroController.deleteList);
-    router.delete('/retrospective/:retroId/member/:userId', retroController.removeMember);
-    router.delete('/card/:cardId/user/:userId', (req, res) => {
+    router.delete('/card/:id', authGuard, retroController.deleteCard);
+    router.delete('/list/:id', authGuard, retroController.deleteList);
+    router.delete('/retrospective/:retroId/member/:userId', authGuard, retroController.removeMember);
+    router.delete('/card/:cardId/user/:userId', authGuard, (req, res) => {
         retroController.cardDownvote(req, res, io);
     });
 
