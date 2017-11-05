@@ -35,6 +35,7 @@ var returnRouter = function(io) {
 
     router.patch('/retrospective/:id', authGuard, retroController.updateRetrospective);
     router.patch('/retrospective/:id/list/sort', authGuard, retroController.sortLists);
+    router.patch('/retrospective/:id/card/sort', authGuard, retroController.sortCards);
     router.patch('/list/:id', authGuard, retroController.updateList);
     router.patch('/card/:id', authGuard, function (req, res) {
         retroController.updateCard(req, res, io);

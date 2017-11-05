@@ -206,3 +206,29 @@ exports.updateListsPosition = function(data, cb) {
         return cb(response);
     });
 };
+
+exports.updateCardsPosition = function(data, cb) {
+    let queryTemp = 'UPDATE comentarios SET position = ? WHERE cd_comentarios = ?; ';
+    let query = '';
+
+    data.forEach((value) => {
+        query += db.format(queryTemp, value);
+    });
+
+    let response = {
+        updated: false,
+        data: {}
+    };
+
+    db.query(query, function (err, results) {
+        if (err) {
+            return cb(err);
+        }
+
+        if (results[0].affectedRows > 0) {
+            response.updated = true;
+        }
+
+        return cb(response);
+    });
+};

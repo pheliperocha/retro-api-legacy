@@ -205,6 +205,14 @@ exports.sortLists = function(req, res) {
     });
 };
 
+exports.sortCards = function(req, res) {
+    let data = req.body;
+
+    Retrospective.updateCardsPosition(data, response => {
+        return res.status(200).send(response);
+    });
+};
+
 exports.updateList = function(req, res) {
     let data = req.body;
 
