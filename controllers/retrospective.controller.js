@@ -24,7 +24,10 @@ exports.getRetrospective = function(req, res) {
 exports.getRetrospectiveByPin = function(req, res) {
     Retrospective.getByPin(req.params.pin, (err, retrospective) => {
         if (err || retrospective == undefined) {
-            return res.status(404);
+            return res.status(404).send({"error":{
+                "code": 404,
+                "message": "Reunião não encontrada."
+            }});
         }
         Retrospective.getFacilitador(retrospective.id, facilitador => {
             Retrospective.getMembers(retrospective.id, members => {
