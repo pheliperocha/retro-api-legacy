@@ -197,6 +197,14 @@ exports.updateRetrospective = function(req, res) {
     });
 };
 
+exports.sortLists = function(req, res) {
+    let data = req.body;
+
+    Retrospective.updateListsPosition(data, response => {
+        return res.status(200).send(response);
+    });
+};
+
 exports.updateList = function(req, res) {
     let data = req.body;
 
