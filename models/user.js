@@ -25,6 +25,20 @@ exports.get = function (userId, cb) {
     });
 };
 
+exports.getResponsibles = function (annotationId, cb) {
+    let query = "SELECT usuario.cd_usuario as id, nome as name, email, image " +
+                "FROM acao_responsavel " +
+                "  JOIN usuario ON usuario.cd_usuario = acao_responsavel.cd_usuario " +
+                "WHERE cd_anotacao_acao = ? ";
+
+    db.query(query, annotationId, function (err, results) {
+        if (err) {
+            return cb(err);
+        }
+        return cb(results);
+    });
+};
+
 exports.getByEmail = function (email, cb) {
     let query = "SELECT cd_usuario as id, nome as name, email, image FROM usuario WHERE email = ? AND cd_status = 1";
 
