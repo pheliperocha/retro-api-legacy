@@ -175,6 +175,20 @@ exports.addNewMember = function(req, res) {
     });
 };
 
+exports.addResponsible = function(req, res) {
+    let info = req.body;
+
+    Annotation.insertResponsible(req.params.id, info.userId, response => {
+        return res.status(200).send(response);
+    });
+};
+
+exports.removeResponsible = function(req, res) {
+    Annotation.deleteResponsible(req.params.annotationId, req.params.userId, response => {
+        return res.status(200).send(response);
+    });
+};
+
 exports.removeMember = function(req, res) {
     Retrospective.deleteMember(req.params.retroId, req.params.userId, response => {
         return res.status(200).send(response);

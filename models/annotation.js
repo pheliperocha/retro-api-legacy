@@ -51,3 +51,37 @@ exports.insert = function(description, cardId, cb) {
         return cb({ id: results.insertId }, null);
     });
 };
+
+exports.insertResponsible = function(annotationId, userId, cb) {
+    let acao_responsavel = {
+        cd_anotacao_acao: annotationId,
+        cd_usuario: userId
+    };
+
+    let query = "INSERT INTO acao_responsavel SET ?";
+
+    db.query(query, acao_responsavel, function (err, results) {
+        if (err) {
+            return cb(results, err);
+        }
+
+        if (results.insertId > 0)
+        return cb(true, err);
+    });
+};
+
+exports.deleteResponsible = function(annotationId, userId, cb) {
+    let query = "DELETE FROM acao_responsavel WHERE cd_anotacao_acao = ? AND cd_usuario = ?";
+
+    db.query(query, [annotationId, userId], function (err, results) {
+        if (err) {
+            return cb(err);
+        }
+
+        if (results.affectedRows > 0) {
+            return cb(true);
+        } else {
+            return cb(false);
+        }
+    });
+};

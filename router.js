@@ -29,6 +29,7 @@ var returnRouter = function(io) {
         retroController.createNewCard(req, res, io);
     });
     router.post('/annotation', authGuard, retroController.createNewAnnotation);
+    router.post('/annotation/:id/user', authGuard, retroController.addResponsible);
     router.post('/card/:id/vote', authGuard, (req, res) => {
         retroController.cardUpvote(req, res, io);
     });
@@ -47,6 +48,7 @@ var returnRouter = function(io) {
     router.delete('/card/:cardId/user/:userId', authGuard, (req, res) => {
         retroController.cardDownvote(req, res, io);
     });
+    router.delete('/annotation/:annotationId/user/:userId', authGuard, retroController.removeResponsible);
 
     router.get('/', function (req, res) {
         return res.status(200).send({
