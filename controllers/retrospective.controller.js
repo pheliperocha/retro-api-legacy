@@ -159,7 +159,8 @@ exports.createNewAnnotation = function(req, res) {
         var newAnnotation = {
             id: annotation.id,
             description: info.description,
-            cardId: info.cardId
+            cardId: info.cardId,
+            responsibles: []
         };
 
         return res.status(200).send(newAnnotation);
