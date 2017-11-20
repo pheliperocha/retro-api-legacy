@@ -17,6 +17,7 @@ var returnRouter = function(io) {
     router.get('/retrospective/:id/card', authGuard, retroController.getAllCards);
     router.get('/retrospective/:id/user', authGuard, retroController.getAllUsers);
     router.get('/template', templateController.getAllTemplates);
+    router.get('/actions', authGuard, retroController.getAllMyActions);
     router.get('/getLinkedinToken/', (req, res) => {
         retroController.getLinkedinToken(req, res, io);
     });

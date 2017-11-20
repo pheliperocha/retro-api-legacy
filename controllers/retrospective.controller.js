@@ -93,6 +93,12 @@ exports.getAllUsers = function(req, res) {
     return res.status(200).send(users);
 };
 
+exports.getAllMyActions = function (req, res) {
+    Retrospective.getParticipations(req.user.id, retros => {
+        return res.status(200).send(retros);
+    });
+};
+
 exports.createNewCard = function(req, res, io) {
 
     var info = req.body;

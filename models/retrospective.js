@@ -37,6 +37,51 @@ exports.getFacilitador = function (id, cb) {
     });
 };
 
+exports.getParticipations = function (userId, cb) {
+    let query = "SELECT reuniao.cd_reuniao as id, nome as title " +
+                "FROM reuniao " +
+                "JOIN reuniao_membro ON reuniao.cd_reuniao = reuniao_membro.cd_reuniao " +
+                "WHERE (reuniao_membro.cd_usuario = 2 OR reuniao.cd_usuario = 2) AND reuniao.cd_status = 1 " +
+                "GROUP BY 1,2 " +
+                "ORDER BY 1 DESC;";
+
+    db.query(query, [userId, userId], function (err, retros) {
+        if(err) {
+            return cb(err);
+        }
+
+        if(retros) {
+            var total = retros.length;
+            var count = 0;
+
+            for(var i = 0; i < total; i++) {
+                (function(){
+                    var retroEntry = retros[i];
+                    var retroObject = {};
+                    retroObject.entry = retroEntry;
+
+                    Annotation.getByResponsible(retroEntry.id, userId, annotation => {
+                        if (annotation.length === 0) {
+                            retros.splice(retros.indexOf(retroEntry), 1);
+                        }
+
+                        retroObject.entry.annotation = annotation;
+                        count++;
+
+                        if (count > total - 1) {
+                            return cb(retros);
+                        }
+                    });
+                }(i));
+            }
+
+            if (total <= 0) {
+                return cb(retros);
+            }
+        }
+    });
+};
+
 exports.getMembers = function (id, cb) {
     let query = "SELECT usuario.cd_usuario as id, nome as name, image " +
         "FROM reuniao_membro " +

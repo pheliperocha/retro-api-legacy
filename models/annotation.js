@@ -36,6 +36,47 @@ exports.get = function (cardId, cb) {
     });
 };
 
+exports.getByResponsible = function (retroId, userId, cb) {
+    let query = "SELECT anotacao_acao.cd_anotacao_acao as id, descricao as description " +
+                "FROM anotacao_acao " +
+                " JOIN acao_responsavel ON anotacao_acao.cd_anotacao_acao = acao_responsavel.cd_anotacao_acao " +
+                " JOIN comentarios ON comentarios.cd_comentarios = cd_comentario " +
+                "WHERE comentarios.cd_reuniao = ? AND acao_responsavel.cd_usuario = ? AND anotacao_acao.cd_status = 1 " +
+                "ORDER BY anotacao_acao.dh_timestamp DESC;";
+
+    db.query(query, [retroId, userId], function (err, annotations) {
+        if (err) {
+            return cb(err);
+        }
+
+        if(annotations) {
+            var total = annotations.length;
+            var count = 0;
+
+            for(var i = 0; i < total; i++) {
+                (function(){
+                    var annotationEntry = annotations[i];
+                    var annotationObject = {};
+                    annotationObject.entry = annotationEntry;
+
+                    User.getResponsibles(annotations[i].id, users => {
+                        annotationObject.entry.responsibles = users;
+                        count++;
+
+                        if (count > total - 1) {
+                            return cb(annotations);
+                        }
+                    });
+                }(i));
+            }
+
+            if (total <= 0) {
+                return cb(annotations);
+            }
+        }
+    });
+};
+
 exports.insert = function(description, cardId, cb) {
     let anotacao_acao = {
         descricao: description,
