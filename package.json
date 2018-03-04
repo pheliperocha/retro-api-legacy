@@ -4,6 +4,7 @@
   "description": "API of TCC's project in order to facilitate Agile Retrospective",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Phelipe Rocha",
