@@ -54,6 +54,7 @@ var returnRouter = function(io) {
     router.get('/', function (req, res) {
         return res.status(200).send({
             "app": "Agile Retrospective",
+            "version": process.env.npm_package_version,
             "description": "Agile Retrospective",
             "developer": "Phelipe Rocha",
             "website": "https://pheliperocha.com.br/",
